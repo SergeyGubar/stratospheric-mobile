@@ -2,7 +2,7 @@ package io.github.gubarsergey.stratosphericbaloon.retrofit.model
 
 import com.google.gson.annotations.SerializedName
 
-data class RegisterResponseModel(
+data class TokenResponseModel(
     @SerializedName("access_token" ) val token: String,
     val userName: String
 )
