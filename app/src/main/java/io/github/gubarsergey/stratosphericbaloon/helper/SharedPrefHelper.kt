@@ -28,6 +28,11 @@ object SharedPrefHelper : AnkoLogger {
         return context.defaultSharedPreferences.getBoolean(IS_USER_LOGGED_IN, false)
     }
 
+    fun getToken(context: Context): String {
+        info("getToken")
+        return context.defaultSharedPreferences.getString(AUTH_TOKEN, "")
+    }
+
     // TODO: Security actually cries here
     fun getUserEmail(context: Context): String {
         info("getUserName")

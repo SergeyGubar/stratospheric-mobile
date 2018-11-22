@@ -1,9 +1,10 @@
-package io.github.gubarsergey.stratosphericbaloon.activity
+package io.github.gubarsergey.stratosphericbaloon.register
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import io.github.gubarsergey.stratosphericbaloon.App
 import io.github.gubarsergey.stratosphericbaloon.R
+import io.github.gubarsergey.stratosphericbaloon.main.MainActivity
 import io.github.gubarsergey.stratosphericbaloon.enum.UserRole
 import io.github.gubarsergey.stratosphericbaloon.helper.CredentialsValidator
 import io.github.gubarsergey.stratosphericbaloon.helper.SharedPrefHelper

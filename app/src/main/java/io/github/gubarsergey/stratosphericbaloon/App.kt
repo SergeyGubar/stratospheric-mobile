@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class App: Application() {
+class App : Application() {
 
     private val gson = GsonBuilder().setLenient().create()
 
@@ -23,6 +23,8 @@ class App: Application() {
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(okHttp)
         .build()
+
+
 
     fun getRetrofit() = retrofit
 

@@ -5,4 +5,8 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="email_or_password_incorrect">Emal or password is incorrect!</string>
+    <string name="launches">Launches</string>
+    <string name="photos">Photos</string>
+    <string name="error_failed_loading_photos">Error loading photos!</string>
+    <string name="downloading_photos">Downloading photos</string>
 </resources>
