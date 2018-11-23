@@ -1,6 +1,5 @@
-package io.github.gubarsergey.stratosphericbaloon
+package io.github.gubarsergey.stratosphericbaloon.api.weather
 
-import android.app.Application
 import com.google.gson.GsonBuilder
 import io.github.gubarsergey.stratosphericbaloon.api.BASE_URL
 import okhttp3.OkHttpClient
@@ -9,8 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class App : Application() {
-
+class WeatherService {
 
     private val gson = GsonBuilder().setLenient().create()
 
@@ -25,8 +23,6 @@ class App : Application() {
         .client(okHttp)
         .build()
 
-
-
-    fun getRetrofit() = retrofit
+    fun getWeatherApi() = retrofit.create(WeatherApi::class.java)
 
 }

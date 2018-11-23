@@ -7,8 +7,8 @@
     <string name="email_or_password_incorrect">Emal or password is incorrect!</string>
     <string name="launches">Launches</string>
     <string name="photos">Photos</string>
-    <string name="error_failed_loading_photos">Error loading photos!</string>
-    <string name="downloading_photos">Downloading photos</string>
+    <string name="error_network_generic">Network request error!</string>
+    <string name="downloading">Downloading</string>
     <string name="new_launch">New Launch</string>
     <string name="new_launch_hint">Hi there! If you want to make a new launch, please, make sure, that\'s your location
         is free from another flying devices so far.
@@ -17,4 +17,17 @@
     <string name="new_launch_result_positive">There are no flights near you, so you\'re ready to go!</string>
     <string name="longitude">Longitude</string>
     <string name="latitude">Latitude</string>
+    <string name="weather">Weather</string>
+    <string name="humidity">Humididty:</string>
+    <string name="wind_speed">Wind speed:</string>
+    <string name="unknown">Unknown</string>
+    <string name="min_temperature">Min. Temperature:</string>
+    <string name="max_temperature">Max temperature</string>
+    <string name="youre_ready_to_go">The weather is good, you are ready to go!</string>
+    <string name="bad_weather_conditions">Bad weather conditions. We don\'t recommend launching today</string>
+    <string name="launch_not_allowed">Unfortunately, today there are a lot of devices in the wind, so your launch is not
+        allowed. Please, check launch tab for more info
+    </string>
+    <string name="log_out">Log out</string>
+    <string name="settings">Settings</string>
 </resources>
