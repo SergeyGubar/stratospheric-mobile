@@ -15,10 +15,12 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.gubarsergey.stratosphericbaloon.App
 import io.github.gubarsergey.stratosphericbaloon.R
+import io.github.gubarsergey.stratosphericbaloon.db.RealmMapper
 import io.github.gubarsergey.stratosphericbaloon.extension.makeInvisible
 import io.github.gubarsergey.stratosphericbaloon.extension.makeVisible
 import io.github.gubarsergey.stratosphericbaloon.extension.notNullContext
 import io.github.gubarsergey.stratosphericbaloon.db.launches.LaunchesRepository
+import io.github.gubarsergey.stratosphericbaloon.db.launches.realm.LaunchMapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_new_launch.*
@@ -38,7 +40,7 @@ class NewLaunchFragment : Fragment(), AnkoLogger {
     }
 
     private val launchesRepository by lazy {
-        LaunchesRepository(notNullContext, retrofit)
+        LaunchesRepository(notNullContext, retrofit, LaunchMapper())
     }
 
     private var longitude = 44.5

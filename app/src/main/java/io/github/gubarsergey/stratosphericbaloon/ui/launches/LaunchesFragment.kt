@@ -11,6 +11,8 @@ import io.github.gubarsergey.stratosphericbaloon.R
 import io.github.gubarsergey.stratosphericbaloon.extension.notNullContext
 import io.github.gubarsergey.stratosphericbaloon.helper.ItemDecoration
 import io.github.gubarsergey.stratosphericbaloon.db.launches.LaunchesRepository
+import io.github.gubarsergey.stratosphericbaloon.db.launches.enitity.Launch
+import io.github.gubarsergey.stratosphericbaloon.db.launches.realm.LaunchMapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -27,7 +29,25 @@ class LaunchesFragment : Fragment(), AnkoLogger {
     }
 
     private val launchesRepository by lazy {
-        LaunchesRepository(notNullContext, retrofit)
+        LaunchesRepository(notNullContext, retrofit, LaunchMapper())
+    }
+
+    private val launches = mutableListOf<Launch>()
+
+    override fun onResume() {
+        super.onResume()
+        disposable = launchesRepository.getAllLaunches()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({ launches ->
+                info("Got launches $launches")
+                this.launches.clear()
+                this.launches.addAll(launches)
+                launches_recycler.adapter?.notifyDataSetChanged()
+                launchesRepository.saveLaunches(launches)
+            }) {
+                info("Failed getting launches! $it")
+            }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -36,22 +56,18 @@ class LaunchesFragment : Fragment(), AnkoLogger {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        disposable = launchesRepository.getAllLaunches()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({ launches ->
-                info("Got launches $launches")
-                val adapter = LaunchesAdapter(launches)
-                launches_recycler.adapter = adapter
-                launches_recycler.layoutManager = LinearLayoutManager(notNullContext)
-                launches_recycler.addItemDecoration(ItemDecoration(resources.getDimensionPixelOffset(R.dimen.default_padding_small)))
-            }) {
-                info("Failed getting launches! $it")
-            }
+        val dbLaunches = launchesRepository.getLaunchesFromDb()
+        this.launches.addAll(dbLaunches)
+        val adapter = LaunchesAdapter(this.launches)
+        launches_recycler.adapter = adapter
+        launches_recycler.layoutManager = LinearLayoutManager(notNullContext)
+        launches_recycler.addItemDecoration(ItemDecoration(resources.getDimensionPixelOffset(R.dimen.default_padding_small)))
+
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         disposable.dispose()
     }
+
 }
