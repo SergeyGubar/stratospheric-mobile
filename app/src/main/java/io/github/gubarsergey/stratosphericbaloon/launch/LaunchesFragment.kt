@@ -16,8 +16,6 @@ import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 
-
-
 class LaunchesFragment : Fragment(), AnkoLogger {
 
     private lateinit var disposable: Disposable
@@ -26,14 +24,17 @@ class LaunchesFragment : Fragment(), AnkoLogger {
         (activity?.application as App).getRetrofit()
     }
 
+    private val launchesRepository by lazy {
+        LaunchesRepository(notNullContext, retrofit)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_launches, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        disposable = retrofit.create(LaunchesApi::class.java)
-            .getLaunches("Bearer ${SharedPrefHelper.getToken(notNullContext)}")
+        disposable = launchesRepository.getAllLaunches()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({

@@ -9,4 +9,12 @@
     <string name="photos">Photos</string>
     <string name="error_failed_loading_photos">Error loading photos!</string>
     <string name="downloading_photos">Downloading photos</string>
+    <string name="new_launch">New Launch</string>
+    <string name="new_launch_hint">Hi there! If you want to make a new launch, please, make sure, that\'s your location
+        is free from another flying devices so far.
+    </string>
+    <string name="check">Check!</string>
+    <string name="new_launch_result_positive">There are no flights near you, so you\'re ready to go!</string>
+    <string name="longitude">Longitude</string>
+    <string name="latitude">Latitude</string>
 </resources>

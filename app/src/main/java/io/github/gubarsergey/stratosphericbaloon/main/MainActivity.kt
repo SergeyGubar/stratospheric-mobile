@@ -7,6 +7,7 @@ import io.github.gubarsergey.stratosphericbaloon.R
 import io.github.gubarsergey.stratosphericbaloon.extension.inTransaction
 import io.github.gubarsergey.stratosphericbaloon.helper.SharedPrefHelper
 import io.github.gubarsergey.stratosphericbaloon.launch.LaunchesFragment
+import io.github.gubarsergey.stratosphericbaloon.launch.NewLaunchFragment
 import io.github.gubarsergey.stratosphericbaloon.photo.PhotosFragment
 import io.github.gubarsergey.stratosphericbaloon.retrofit.api.register.LoginApi
 import io.github.gubarsergey.stratosphericbaloon.retrofit.model.UserLoginModel
@@ -29,6 +30,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportFragmentManager.inTransaction {
+            add(R.id.main_container, NewLaunchFragment())
+        }
         loginUser()
         nav_view.setNavigationItemSelectedListener { item ->
             item.isChecked = true
@@ -40,6 +44,11 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 R.id.nav_photos -> {
                     supportFragmentManager.inTransaction {
                         replace(R.id.main_container, PhotosFragment())
+                    }
+                }
+                R.id.nav_new_launch -> {
+                    supportFragmentManager.inTransaction {
+                        replace(R.id.main_container, NewLaunchFragment())
                     }
                 }
             }

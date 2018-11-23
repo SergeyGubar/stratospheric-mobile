@@ -35,12 +35,12 @@ object SharedPrefHelper : AnkoLogger {
 
     // TODO: Security actually cries here
     fun getUserEmail(context: Context): String {
-        info("getUserName")
+        info("getUserEmail")
         return context.defaultSharedPreferences.getString(USER_EMAIL, "")
     }
 
     fun getUserPassword(context: Context): String {
-        info("getUserName")
+        info("getUserPassword")
         return context.defaultSharedPreferences.getString(USER_PASSWORD, "")
     }
 }
