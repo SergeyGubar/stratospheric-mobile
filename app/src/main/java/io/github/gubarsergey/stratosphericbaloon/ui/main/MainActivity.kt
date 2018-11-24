@@ -12,6 +12,8 @@ import io.github.gubarsergey.stratosphericbaloon.ui.launches.NewLaunchFragment
 import io.github.gubarsergey.stratosphericbaloon.ui.photo.PhotosFragment
 import io.github.gubarsergey.stratosphericbaloon.api.login.LoginApi
 import io.github.gubarsergey.stratosphericbaloon.api.login.entity.UserLoginModel
+import io.github.gubarsergey.stratosphericbaloon.api.register.entity.UserRole
+import io.github.gubarsergey.stratosphericbaloon.ui.admin.AdminFragment
 import io.github.gubarsergey.stratosphericbaloon.ui.settings.SettingsFragment
 import io.github.gubarsergey.stratosphericbaloon.ui.weather.WeatherFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -40,6 +42,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             add(R.id.main_container, NewLaunchFragment())
         }
         nav_view.getHeaderView(0).nav_header_title.text = SharedPrefHelper.getUserEmail(this)
+        if (SharedPrefHelper.getRole(this) != UserRole.ADMIN.role) {
+            nav_view.menu.findItem(R.id.nav_admin).isVisible = false
+        }
         loginUser()
         setupDrawer()
     }
@@ -54,6 +59,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 R.id.nav_new_launch -> NewLaunchFragment()
                 R.id.nav_weather -> WeatherFragment()
                 R.id.nav_settings -> SettingsFragment()
+                R.id.nav_admin -> AdminFragment()
                 else -> throw IllegalStateException()
             }
             supportFragmentManager.inTransaction {
@@ -72,7 +78,13 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             .subscribeOn(Schedulers.io())
             .subscribe({ tokenModel ->
                 info("Successfully logged $tokenModel")
-                SharedPrefHelper.saveUserData(this, email, password, true, tokenModel.token)
+                SharedPrefHelper.saveUserData(
+                    this,
+                    email,
+                    password,
+                    true,
+                    tokenModel.token,
+                    tokenModel.role)
             }, { ex ->
                 toast("Login failed!")
                 info("Login failed $ex")

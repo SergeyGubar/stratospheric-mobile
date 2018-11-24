@@ -8,7 +8,7 @@
     <string name="launches">Launches</string>
     <string name="photos">Photos</string>
     <string name="error_network_generic">Network request error!</string>
-    <string name="downloading">Downloading</string>
+    <string name="downloading">Downloading..</string>
     <string name="new_launch">New Launch</string>
     <string name="new_launch_hint">Hi there! If you want to make a new launch, please, make sure, that\'s your location
         is free from another flying devices so far.
@@ -30,4 +30,6 @@
     </string>
     <string name="log_out">Log out</string>
     <string name="settings">Settings</string>
+    <string name="admin">Admin</string>
+    <string name="name">Name</string>
 </resources>

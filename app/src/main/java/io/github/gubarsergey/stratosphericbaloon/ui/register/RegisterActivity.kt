@@ -48,7 +48,14 @@ class RegisterActivity : AppCompatActivity(), AnkoLogger {
                     .subscribeOn(Schedulers.io())
                     .subscribe({ tokenModel ->
                         info("Successfully registered $tokenModel")
-                        SharedPrefHelper.saveUserData(this, email, password, true, tokenModel.token)
+                        SharedPrefHelper.saveUserData(
+                            this,
+                            email,
+                            password,
+                            true,
+                            tokenModel.token,
+                            UserRole.ADMIN.role
+                        )
                         startActivity(intentFor<MainActivity>())
                         finish()
                     }) { ex ->

@@ -1,10 +1,10 @@
 package io.github.gubarsergey.stratosphericbaloon.api.launch
 
+import io.github.gubarsergey.stratosphericbaloon.api.launch.entitiy.AddLaunchModel
 import io.github.gubarsergey.stratosphericbaloon.db.launches.enitity.Launch
 import io.reactivex.Observable
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Query
+import okhttp3.ResponseBody
+import retrofit2.http.*
 
 interface LaunchesApi {
 
@@ -18,4 +18,11 @@ interface LaunchesApi {
         @Query("latitude") latitude: Double
     ): Observable<List<Launch>>
 
+    @DELETE("user/removeLaunch")
+    fun removeLaunch(@Header("Authorization") token: String,
+                     @Query("id") id: String): Observable<ResponseBody>
+
+    @POST("user/addLaunch")
+    fun addLaunch(@Header("Authorization") token: String,
+                  @Body model: AddLaunchModel): Observable<ResponseBody>
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StratosphericBaloon</string>
+    <string name="login">Логін</string>
+    <string name="register">Реєстрація</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="email_or_password_incorrect">Імейл чи пароль некоректні!</string>
+    <string name="launches">Запуски</string>
+    <string name="photos">Фото</string>
+    <string name="error_network_generic">Помилка запиту до сервера!</string>
+    <string name="downloading">Завантаження..</string>
+    <string name="new_launch">Новий Запуск</string>
+    <string name="new_launch_hint">Привіт! Якщо ти хочеш запустити свій стратостат - переконайся, будь ласка, що поблизу
+        немає інших пристроїв у повітрі
+    </string>
+    <string name="check">Перевірити!</string>
+    <string name="new_launch_result_positive">Поблизу немає жодного пристроя у повітрі, можеш запускати свій
+        стратостат!
+    </string>
+    <string name="longitude">Довгота</string>
+    <string name="latitude">Широта</string>
+    <string name="weather">Погода</string>
+    <string name="humidity">Вологість</string>
+    <string name="wind_speed">Швидкість повітря</string>
+    <string name="unknown">Не знайдено</string>
+    <string name="min_temperature">Мін. Температура</string>
+    <string name="max_temperature">Макс. Температура</string>
+    <string name="youre_ready_to_go">Погода підходить, можешь запускати свій стратостат!</string>
+    <string name="bad_weather_conditions">Погода погана. Ми не рекомендуємо запускати пристрій сьогодні.</string>
+    <string name="launch_not_allowed">Сьогодні дуже багато пристроїв у повітрі, тому запуск заборонено :(</string>
+    <string name="log_out">Вийти</string>
+    <string name="settings">Налаштування</string>
+</resources>

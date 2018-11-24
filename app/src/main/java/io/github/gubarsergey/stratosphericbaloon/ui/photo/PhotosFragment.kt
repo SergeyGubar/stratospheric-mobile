@@ -20,9 +20,7 @@ import io.github.gubarsergey.stratosphericbaloon.db.photo.PhotosRepository
 import io.github.gubarsergey.stratosphericbaloon.helper.GlideApp
 import io.github.gubarsergey.stratosphericbaloon.helper.IMAGE_HEIGHT
 import io.github.gubarsergey.stratosphericbaloon.helper.IMAGE_WIDTH
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_photos.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -31,10 +29,10 @@ import java.util.*
 
 class PhotosFragment : Fragment(), AnkoLogger {
 
-    private lateinit var disposable: Disposable
+    private val disposable = CompositeDisposable()
 
     private val photosRepository by lazy {
-        PhotosRepository((this@PhotosFragment.activity?.application as App).getRetrofit())
+        PhotosRepository(notNullContext, (this@PhotosFragment.activity?.application as App).getRetrofit())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -44,29 +42,29 @@ class PhotosFragment : Fragment(), AnkoLogger {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        disposable = photosRepository.getUserPhotos("Bearer ${SharedPrefHelper.getToken(notNullContext)}")
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
+        disposable.add(photosRepository
+            .getUserPhotos("Bearer ${SharedPrefHelper.getToken(notNullContext)}")
             .doOnSubscribe {
                 toast(getString(R.string.downloading))
             }
             .doOnError {
                 toast(getString(R.string.error_network_generic))
             }
-            .subscribe({ ids ->
-                info("Got photos ids $ids")
-                setupPhotos(ids)
+            .subscribe({ urlsToIds ->
+                info("Got photos urlsToIds $urlsToIds")
+                setupPhotos(urlsToIds.map { it.first }.toMutableList(),
+                    urlsToIds.map { it.second }.toMutableList())
             }) { ex ->
                 info("Fail $ex")
-            }
+            })
 
     }
 
-    private fun setupPhotos(ids: List<String>) {
+    private fun setupPhotos(urls: MutableList<String>, ids: MutableList<String>) {
         val preloadSizeProvider = FixedPreloadSizeProvider<String>(IMAGE_WIDTH, IMAGE_HEIGHT)
         val modelProvider = object : ListPreloader.PreloadModelProvider<String> {
             override fun getPreloadItems(position: Int): MutableList<String> {
-                val url = ids[position]
+                val url = urls[position]
                 if (TextUtils.isEmpty(url)) {
                     return Collections.emptyList()
                 }
@@ -88,7 +86,18 @@ class PhotosFragment : Fragment(), AnkoLogger {
 
         photos_recycler.addOnScrollListener(preloader)
         photos_recycler.layoutManager = LinearLayoutManager(notNullContext)
-        photos_recycler.adapter = PhotosAdapter(this, ids)
+        photos_recycler.adapter = PhotosAdapter(this, urls, ids) { id ->
+            photosRepository.removePhoto(id)
+                .subscribe({ result  ->
+                    val index = ids.indexOf(id)
+                    urls.removeAt(index)
+                    ids.removeAt(index)
+                    photos_recycler.adapter?.notifyItemRemoved(index)
+                    info("Remove photo $result")
+                }) { ex ->
+                    info("Fail $ex")
+                }
+        }
 
     }
 

@@ -37,8 +37,6 @@ class LaunchesFragment : Fragment(), AnkoLogger {
     override fun onResume() {
         super.onResume()
         disposable = launchesRepository.getAllLaunches()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
             .subscribe({ launches ->
                 info("Got launches $launches")
                 this.launches.clear()

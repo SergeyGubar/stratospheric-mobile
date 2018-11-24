@@ -31,6 +31,8 @@
         </activity>
         <activity android:name=".ui.register.RegisterActivity">
         </activity>
+        <activity android:name=".ui.admin.addlaunch.AddLaunchActivity">
+        </activity>
     </application>
 
 </manifest>

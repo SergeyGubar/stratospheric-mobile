@@ -10,9 +10,12 @@ import kotlinx.android.synthetic.main.item_photo.view.*
 import org.jetbrains.anko.layoutInflater
 
 class PhotosAdapter(val fragment: Fragment,
-                    val urls: List<String>): RecyclerView.Adapter<PhotosAdapter.PhotoViewHolder>() {
+                    val urls: List<String>,
+                    val ids: List<String>,
+                    val deletePhotoCallback: (String) -> Unit): RecyclerView.Adapter<PhotosAdapter.PhotoViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): PhotoViewHolder {
         return PhotoViewHolder(parent.context.layoutInflater.inflate(R.layout.item_photo, parent, false))
+            .apply { itemView.setOnLongClickListener { deletePhotoCallback(ids[adapterPosition]) ;false } }
     }
 
     override fun getItemCount(): Int = urls.size

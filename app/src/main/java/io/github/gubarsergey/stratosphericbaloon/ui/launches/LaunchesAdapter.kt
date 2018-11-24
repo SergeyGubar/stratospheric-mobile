@@ -21,8 +21,6 @@ class LaunchesAdapter(val launches: List<Launch>) : RecyclerView.Adapter<Launche
     inner class LaunchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         @SuppressLint("SetTextI18n")
         fun bind(launch: Launch) {
-            // TODO :(
-            // TODO: Add divider
             itemView.item_launch_time_text_view.text = launch.time.substring(0, 10)
             itemView.item_launch_name_text_view.text = launch.name
             itemView.item_launch_coords_text_view.text = "Longitude: ${launch.longitude}, Latitude: ${launch.latitude}"
